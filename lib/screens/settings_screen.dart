@@ -23,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final localeProvider = Provider.of<LocaleProvider>(context);
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -53,7 +53,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               icon: Icons.today,
               title: l10n.exportTodayCases,
               subtitle: l10n.exportTodayCasesSubtitle,
-              onTap: () => CasePdfExportUtils.exportTodayCases(context: context),
+              onTap: () =>
+                  CasePdfExportUtils.exportTodayCases(context: context),
             ),
             const SizedBox(height: 12),
 
@@ -87,11 +88,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 title: Text(
                   l10n.darkMode,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
                 secondary: Icon(Icons.dark_mode, color: primaryBlack),
                 value: _isDarkMode,
                 onChanged: (bool value) {
+                  if (value) {
+                    // Show coming soon message for dark mode
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l10n.comingSoon),
+                        backgroundColor: primaryBlack,
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                    return; // Don't actually toggle the switch
+                  }
                   setState(() {
                     _isDarkMode = value;
                   });
@@ -137,7 +152,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     child: Row(
                       children: [
-                        _buildLanguageOption(l10n.english, 'en', localeProvider),
+                        _buildLanguageOption(
+                          l10n.english,
+                          'en',
+                          localeProvider,
+                        ),
                         _buildLanguageOption(l10n.hindi, 'hi', localeProvider),
                       ],
                     ),
@@ -151,7 +170,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Center(
               child: Text(
                 "Vakeel Diary v1.0.0",
-                style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                style: TextStyle(
+                  color: Colors.grey[400],
+                  fontSize:
+                      Provider.of<LocaleProvider>(
+                            context,
+                          ).locale.languageCode ==
+                          'hi'
+                      ? 14
+                      : 12,
+                ),
               ),
             ),
           ],
@@ -162,10 +190,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   // --- Widget: Section Header ---
   Widget _buildSectionHeader(String title) {
+    final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
     return Text(
       title.toUpperCase(),
       style: TextStyle(
-        fontSize: 12,
+        fontSize: localeProvider.locale.languageCode == 'hi' ? 14 : 12,
         fontWeight: FontWeight.bold,
         letterSpacing: 1.2,
         color: Colors.grey[600],
@@ -174,7 +203,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   // --- Widget: Language Toggle Button ---
-  Widget _buildLanguageOption(String label, String code, LocaleProvider localeProvider) {
+  Widget _buildLanguageOption(
+    String label,
+    String code,
+    LocaleProvider localeProvider,
+  ) {
     bool isSelected = localeProvider.locale.languageCode == code;
     return Expanded(
       child: GestureDetector(
@@ -201,7 +234,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             label,
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: 13,
+              fontSize:
+                  Provider.of<LocaleProvider>(context).locale.languageCode ==
+                      'hi'
+                  ? 15
+                  : 13,
               color: isSelected ? primaryBlack : Colors.grey[600],
             ),
           ),
@@ -251,7 +288,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const SizedBox(height: 2),
                   Text(
                     subtitle,
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize:
+                          Provider.of<LocaleProvider>(
+                                context,
+                              ).locale.languageCode ==
+                              'hi'
+                          ? 14
+                          : 12,
+                    ),
                   ),
                 ],
               ),

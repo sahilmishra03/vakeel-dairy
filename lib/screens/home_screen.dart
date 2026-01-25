@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'add_case_screen.dart';
 import 'view_all_cases_screen.dart';
 import '../providers/case_provider.dart';
+import '../providers/locale_provider.dart';
 import '../generated/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -60,11 +61,17 @@ class _HomeScreenState extends State<HomeScreen>
                     letterSpacing: -0.5,
                   ),
                 ),
-                const Text(
-                  'Advocate Portal',
+                Text(
+                  l10n.advocatePortal,
                   style: TextStyle(
                     color: Colors.grey,
-                    fontSize: 12,
+                    fontSize:
+                        Provider.of<LocaleProvider>(
+                              context,
+                            ).locale.languageCode ==
+                            'hi'
+                        ? 15
+                        : 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -155,8 +162,14 @@ class _HomeScreenState extends State<HomeScreen>
                             },
                             child: Text(
                               l10n.viewAll,
-                              style: const TextStyle(
-                                fontSize: 14,
+                              style: TextStyle(
+                                fontSize:
+                                    Provider.of<LocaleProvider>(
+                                          context,
+                                        ).locale.languageCode ==
+                                        'hi'
+                                    ? 16
+                                    : 14,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.grey,
                                 decoration: TextDecoration.underline,
@@ -175,15 +188,18 @@ class _HomeScreenState extends State<HomeScreen>
                       ...todayHearings.map(
                         (caseItem) => Padding(
                           padding: const EdgeInsets.only(bottom: 16),
-                          child: _buildHearingCard(
-                            caseId: caseItem.id,
-                            caseNumber: caseItem.caseNumber,
-                            caseType: caseItem.caseType,
-                            courtName: caseItem.courtName,
-                            clientName: caseItem.clientName,
-                            opponentName: caseItem.opponentName,
-                            status: caseItem.status,
-                            caseProvider: caseProvider,
+                          child: GestureDetector(
+                            onTap: () => _editCase(caseItem.id, caseProvider),
+                            child: _buildHearingCard(
+                              caseId: caseItem.id,
+                              caseNumber: caseItem.caseNumber,
+                              caseType: caseItem.caseType,
+                              courtName: caseItem.courtName,
+                              clientName: caseItem.clientName,
+                              opponentName: caseItem.opponentName,
+                              status: caseItem.status,
+                              caseProvider: caseProvider,
+                            ),
                           ),
                         ),
                       ),
@@ -252,9 +268,13 @@ class _HomeScreenState extends State<HomeScreen>
           const SizedBox(height: 25),
           Text(
             l10n.activeCases,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.grey,
-              fontSize: 14,
+              fontSize:
+                  Provider.of<LocaleProvider>(context).locale.languageCode ==
+                      'hi'
+                  ? 17
+                  : 14,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -328,6 +348,7 @@ class _HomeScreenState extends State<HomeScreen>
     required String status,
     required CaseProvider caseProvider,
   }) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -382,28 +403,12 @@ class _HomeScreenState extends State<HomeScreen>
                         borderRadius: BorderRadius.circular(12),
                       ),
                       onSelected: (value) {
-                        if (value == 'edit') {
-                          _editCase(caseId, caseProvider);
-                        } else if (value == 'delete') {
+                        if (value == 'delete') {
                           _deleteCase(caseId, caseProvider);
                         }
                       },
                       itemBuilder: (BuildContext context) => [
-                        const PopupMenuItem(
-                          value: 'edit',
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.edit_outlined,
-                                size: 18,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 10),
-                              Text("Edit Case", style: TextStyle(fontSize: 14)),
-                            ],
-                          ),
-                        ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'delete',
                           child: Row(
                             children: [
@@ -414,7 +419,7 @@ class _HomeScreenState extends State<HomeScreen>
                               ),
                               SizedBox(width: 10),
                               Text(
-                                "Delete",
+                                l10n.deleteCase,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.red,
@@ -479,7 +484,13 @@ class _HomeScreenState extends State<HomeScreen>
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontWeight: FontWeight.w500,
-                        fontSize: 13,
+                        fontSize:
+                            Provider.of<LocaleProvider>(
+                                  context,
+                                ).locale.languageCode ==
+                                'hi'
+                            ? 15
+                            : 13,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -494,7 +505,16 @@ class _HomeScreenState extends State<HomeScreen>
                     const SizedBox(width: 10),
                     Text(
                       caseType,
-                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize:
+                            Provider.of<LocaleProvider>(
+                                  context,
+                                ).locale.languageCode ==
+                                'hi'
+                            ? 15
+                            : 13,
+                      ),
                     ),
                   ],
                 ),
@@ -507,21 +527,25 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Widget _buildStatusBadge(String status) {
+    final l10n = AppLocalizations.of(context)!;
     bool isActive = status == 'Active';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: isActive ? kPrimaryBlack : Colors.transparent,
+        color: isActive ? kPrimaryBlack : Colors.grey.shade100,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isActive ? kPrimaryBlack : Colors.grey.shade400,
+          color: isActive ? kPrimaryBlack : Colors.grey.shade300,
         ),
       ),
       child: Text(
-        status.toUpperCase(),
+        status == 'Active' ? l10n.active : l10n.closed,
         style: TextStyle(
-          color: isActive ? Colors.white : Colors.grey.shade600,
-          fontSize: 10,
+          color: isActive ? Colors.white : Colors.grey.shade700,
+          fontSize:
+              Provider.of<LocaleProvider>(context).locale.languageCode == 'hi'
+              ? 12
+              : 10,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
         ),
@@ -542,20 +566,21 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _deleteCase(String caseId, CaseProvider caseProvider) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
-        title: const Text('Delete Case?'),
-        content: const Text('This action cannot be undone.'),
+        title: Text(l10n.deleteCase),
+        content: Text(l10n.confirmDelete),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+            child: Text(l10n.cancel, style: TextStyle(color: Colors.grey)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.delete, style: TextStyle(color: Colors.red)),
           ),
         ],
       ),

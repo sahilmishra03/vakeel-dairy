@@ -12,6 +12,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Vakeel Diary';
 
   @override
+  String get advocatePortal => 'Advocate Portal';
+
+  @override
   String get home => 'Home';
 
   @override
@@ -136,6 +139,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteCase => 'Delete Case';
 
   @override
+  String get deleteCaseTitle => 'Delete Case?';
+
+  @override
+  String get deleteCaseMessage => 'This action cannot be undone.';
+
+  @override
   String get caseNumberHint => 'Enter case number';
 
   @override
@@ -167,4 +176,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchCases => 'Search cases...';
+
+  @override
+  String get civil => 'Civil';
+
+  @override
+  String get criminal => 'Criminal';
+
+  @override
+  String get family => 'Family';
+
+  @override
+  String get corporate => 'Corporate';
+
+  @override
+  String get appellate => 'Appellate';
+
+  @override
+  String get parties => 'Parties';
+
+  @override
+  String get clientName => 'Client Name';
+
+  @override
+  String get opponentName => 'Opponent Name';
+
+  @override
+  String get judgeName => 'Judge Name';
+
+  @override
+  String get timeline => 'Timeline';
+
+  @override
+  String get previousHearing => 'Previous Hearing';
+
+  @override
+  String get caseStatus => 'Case Status';
+
+  @override
+  String get caseType => 'Case Type';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get opponentPartyName => 'Opponent party name';
+
+  @override
+  String get honorableJudge => 'Honorable Judge';
+
+  @override
+  String get selectDate => 'Select Date';
+
+  @override
+  String get comingSoon => 'Coming Soon';
 }

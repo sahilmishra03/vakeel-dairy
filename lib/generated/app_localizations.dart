@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'Vakeel Diary'**
   String get appTitle;
 
+  /// Subtitle for the application
+  ///
+  /// In en, this message translates to:
+  /// **'Advocate Portal'**
+  String get advocatePortal;
+
   /// Navigation tab label for Home
   ///
   /// In en, this message translates to:
@@ -344,6 +350,18 @@ abstract class AppLocalizations {
   /// **'Delete Case'**
   String get deleteCase;
 
+  /// Title for delete case confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Case?'**
+  String get deleteCaseTitle;
+
+  /// Message for delete case confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone.'**
+  String get deleteCaseMessage;
+
   /// Hint text for case number field
   ///
   /// In en, this message translates to:
@@ -409,6 +427,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search cases...'**
   String get searchCases;
+
+  /// Case type - Civil
+  ///
+  /// In en, this message translates to:
+  /// **'Civil'**
+  String get civil;
+
+  /// Case type - Criminal
+  ///
+  /// In en, this message translates to:
+  /// **'Criminal'**
+  String get criminal;
+
+  /// Case type - Family
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get family;
+
+  /// Case type - Corporate
+  ///
+  /// In en, this message translates to:
+  /// **'Corporate'**
+  String get corporate;
+
+  /// Case type - Appellate
+  ///
+  /// In en, this message translates to:
+  /// **'Appellate'**
+  String get appellate;
+
+  /// Section header for parties information
+  ///
+  /// In en, this message translates to:
+  /// **'Parties'**
+  String get parties;
+
+  /// Label for client name field
+  ///
+  /// In en, this message translates to:
+  /// **'Client Name'**
+  String get clientName;
+
+  /// Label for opponent name field
+  ///
+  /// In en, this message translates to:
+  /// **'Opponent Name'**
+  String get opponentName;
+
+  /// Label for judge name field
+  ///
+  /// In en, this message translates to:
+  /// **'Judge Name'**
+  String get judgeName;
+
+  /// Section header for timeline information
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get timeline;
+
+  /// Label for previous hearing date
+  ///
+  /// In en, this message translates to:
+  /// **'Previous Hearing'**
+  String get previousHearing;
+
+  /// Label for case status selection
+  ///
+  /// In en, this message translates to:
+  /// **'Case Status'**
+  String get caseStatus;
+
+  /// Label for case type selection
+  ///
+  /// In en, this message translates to:
+  /// **'Case Type'**
+  String get caseType;
+
+  /// Hint text for full name
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get fullName;
+
+  /// Hint text for opponent party name
+  ///
+  /// In en, this message translates to:
+  /// **'Opponent party name'**
+  String get opponentPartyName;
+
+  /// Hint text for judge name
+  ///
+  /// In en, this message translates to:
+  /// **'Honorable Judge'**
+  String get honorableJudge;
+
+  /// Hint text for date selection
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date'**
+  String get selectDate;
+
+  /// Text for features coming soon
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon'**
+  String get comingSoon;
 }
 
 class _AppLocalizationsDelegate

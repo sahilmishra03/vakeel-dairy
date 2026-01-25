@@ -4,12 +4,24 @@ import 'package:hive/hive.dart';
 class ThemeProvider extends ChangeNotifier {
   static const String _themeKey = 'theme_mode';
   bool _isDarkMode = false;
+  Locale _currentLocale = const Locale('en');
 
   bool get isDarkMode => _isDarkMode;
+  Locale get currentLocale => _currentLocale;
 
   ThemeProvider() {
     _loadThemeFromStorage();
   }
+
+  void updateLocale(Locale locale) {
+    _currentLocale = locale;
+    notifyListeners();
+  }
+
+  bool get isHindiLocale => _currentLocale.languageCode == 'hi';
+
+  double get _hindiFontScale => isHindiLocale ? 1.2 : 1.0;
+  double get _hindiGreyFontScale => isHindiLocale ? 1.4 : 1.0;
 
   ThemeData get currentTheme {
     return _isDarkMode ? _darkTheme : _lightTheme;
@@ -33,11 +45,36 @@ class ThemeProvider extends ChangeNotifier {
           foregroundColor: Colors.white,
         ),
       ),
-      textTheme: const TextTheme(
-        bodyLarge: TextStyle(color: Colors.black),
-        bodyMedium: TextStyle(color: Colors.black),
-        displayLarge: TextStyle(color: Colors.black),
-        displayMedium: TextStyle(color: Colors.black),
+      textTheme: TextTheme(
+        bodyLarge: TextStyle(
+          color: Colors.black,
+          fontSize: 16 * _hindiFontScale,
+        ),
+        bodyMedium: TextStyle(
+          color: Colors.black,
+          fontSize: 14 * _hindiFontScale,
+        ),
+        bodySmall: TextStyle(
+          color: Colors.grey,
+          fontSize: 12 * _hindiGreyFontScale,
+        ),
+        displayLarge: TextStyle(
+          color: Colors.black,
+          fontSize: 32 * _hindiFontScale,
+        ),
+        displayMedium: TextStyle(
+          color: Colors.black,
+          fontSize: 28 * _hindiFontScale,
+        ),
+        titleMedium: TextStyle(
+          color: Colors.grey,
+          fontSize: 14 * _hindiGreyFontScale,
+          fontWeight: FontWeight.w500,
+        ),
+        labelSmall: TextStyle(
+          color: Colors.grey,
+          fontSize: 11 * _hindiGreyFontScale,
+        ),
       ),
     );
   }
@@ -60,11 +97,36 @@ class ThemeProvider extends ChangeNotifier {
           foregroundColor: Colors.white,
         ),
       ),
-      textTheme: const TextTheme(
-        bodyLarge: TextStyle(color: Colors.white),
-        bodyMedium: TextStyle(color: Colors.white),
-        displayLarge: TextStyle(color: Colors.white),
-        displayMedium: TextStyle(color: Colors.white),
+      textTheme: TextTheme(
+        bodyLarge: TextStyle(
+          color: Colors.white,
+          fontSize: 16 * _hindiFontScale,
+        ),
+        bodyMedium: TextStyle(
+          color: Colors.white,
+          fontSize: 14 * _hindiFontScale,
+        ),
+        bodySmall: TextStyle(
+          color: Colors.grey[400],
+          fontSize: 12 * _hindiGreyFontScale,
+        ),
+        displayLarge: TextStyle(
+          color: Colors.white,
+          fontSize: 32 * _hindiFontScale,
+        ),
+        displayMedium: TextStyle(
+          color: Colors.white,
+          fontSize: 28 * _hindiFontScale,
+        ),
+        titleMedium: TextStyle(
+          color: Colors.grey[400],
+          fontSize: 14 * _hindiGreyFontScale,
+          fontWeight: FontWeight.w500,
+        ),
+        labelSmall: TextStyle(
+          color: Colors.grey[400],
+          fontSize: 11 * _hindiGreyFontScale,
+        ),
       ),
     );
   }

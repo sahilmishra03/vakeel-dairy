@@ -8,15 +8,12 @@ import '../providers/case_provider.dart';
 
 /// Utility class for exporting case data to PDF
 class CasePdfExportUtils {
-  
   /// Export today's cases to PDF
-  static Future<bool> exportTodayCases({
-    required BuildContext context,
-  }) async {
+  static Future<bool> exportTodayCases({required BuildContext context}) async {
     try {
       final caseProvider = Provider.of<CaseProvider>(context, listen: false);
       final todayCases = caseProvider.todayHearings;
-      
+
       if (todayCases.isEmpty) {
         _showEmptyDataDialog(context, 'No cases scheduled for today');
         return false;
@@ -35,13 +32,11 @@ class CasePdfExportUtils {
   }
 
   /// Export all cases to PDF
-  static Future<bool> exportAllCases({
-    required BuildContext context,
-  }) async {
+  static Future<bool> exportAllCases({required BuildContext context}) async {
     try {
       final caseProvider = Provider.of<CaseProvider>(context, listen: false);
       final allCases = caseProvider.allCases;
-      
+
       if (allCases.isEmpty) {
         _showEmptyDataDialog(context, 'No cases found in the database');
         return false;
@@ -84,7 +79,7 @@ class CasePdfExportUtils {
     try {
       // Generate PDF document
       final pdf = pw.Document();
-      
+
       // Add a page to the PDF
       pdf.addPage(
         pw.Page(
@@ -106,7 +101,7 @@ class CasePdfExportUtils {
                     ),
                   ),
                 ),
-                
+
                 // Summary section
                 pw.Container(
                   padding: const pw.EdgeInsets.all(16),
@@ -139,55 +134,85 @@ class CasePdfExportUtils {
                   ),
                 ),
                 pw.SizedBox(height: 20),
-                
+
                 // Table header
                 pw.Container(
                   padding: const pw.EdgeInsets.symmetric(vertical: 12),
                   decoration: pw.BoxDecoration(
-                    border: pw.Border(bottom: pw.BorderSide(width: 2, color: PdfColors.grey800)),
+                    border: pw.Border(
+                      bottom: pw.BorderSide(width: 2, color: PdfColors.grey800),
+                    ),
                   ),
                   child: pw.Row(
                     children: [
                       pw.Expanded(flex: 1, child: _buildTableHeader('#')),
-                      pw.Expanded(flex: 2, child: _buildTableHeader('Case No.')),
+                      pw.Expanded(
+                        flex: 2,
+                        child: _buildTableHeader('Case No.'),
+                      ),
                       pw.Expanded(flex: 2, child: _buildTableHeader('Client')),
                       pw.Expanded(flex: 2, child: _buildTableHeader('Court')),
-                      pw.Expanded(flex: 2, child: _buildTableHeader('Next Hearing')),
+                      pw.Expanded(
+                        flex: 2,
+                        child: _buildTableHeader('Next Hearing'),
+                      ),
                       pw.Expanded(flex: 1, child: _buildTableHeader('Status')),
                     ],
                   ),
                 ),
-                
+
                 // Table content
                 for (int i = 0; i < cases.length; i++) ...[
                   pw.Container(
                     padding: const pw.EdgeInsets.symmetric(vertical: 8),
                     decoration: pw.BoxDecoration(
-                      border: pw.Border(bottom: pw.BorderSide(width: 0.5, color: PdfColors.grey300)),
+                      border: pw.Border(
+                        bottom: pw.BorderSide(
+                          width: 0.5,
+                          color: PdfColors.grey300,
+                        ),
+                      ),
                     ),
                     child: pw.Row(
                       children: [
-                        pw.Expanded(flex: 1, child: _buildTableCell('${i + 1}')),
-                        pw.Expanded(flex: 2, child: _buildTableCell(cases[i].caseNumber)),
-                        pw.Expanded(flex: 2, child: _buildTableCell(cases[i].clientName)),
-                        pw.Expanded(flex: 2, child: _buildTableCell(cases[i].courtName)),
-                        pw.Expanded(flex: 2, child: _buildTableCell(_formatDate(cases[i].nextHearing))),
-                        pw.Expanded(flex: 1, child: _buildStatusCell(cases[i].status)),
+                        pw.Expanded(
+                          flex: 1,
+                          child: _buildTableCell('${i + 1}'),
+                        ),
+                        pw.Expanded(
+                          flex: 2,
+                          child: _buildTableCell(cases[i].caseNumber),
+                        ),
+                        pw.Expanded(
+                          flex: 2,
+                          child: _buildTableCell(cases[i].clientName),
+                        ),
+                        pw.Expanded(
+                          flex: 2,
+                          child: _buildTableCell(cases[i].courtName),
+                        ),
+                        pw.Expanded(
+                          flex: 2,
+                          child: _buildTableCell(
+                            _formatDate(cases[i].nextHearing),
+                          ),
+                        ),
+                        pw.Expanded(
+                          flex: 1,
+                          child: _buildStatusCell(cases[i].status),
+                        ),
                       ],
                     ),
                   ),
                 ],
-                
+
                 // Footer
                 pw.Spacer(),
                 pw.Container(
                   padding: const pw.EdgeInsets.only(top: 24),
                   child: pw.Text(
                     'Vakeel Diary - Legal Case Management System',
-                    style: pw.TextStyle(
-                      fontSize: 10,
-                      color: PdfColors.grey600,
-                    ),
+                    style: pw.TextStyle(fontSize: 10, color: PdfColors.grey600),
                   ),
                 ),
               ],
@@ -231,10 +256,7 @@ class CasePdfExportUtils {
   static pw.Widget _buildTableCell(String text) {
     return pw.Text(
       text,
-      style: const pw.TextStyle(
-        fontSize: 9,
-        color: PdfColors.black,
-      ),
+      style: const pw.TextStyle(fontSize: 9, color: PdfColors.black),
     );
   }
 
@@ -251,7 +273,7 @@ class CasePdfExportUtils {
       default:
         statusColor = PdfColors.grey700;
     }
-    
+
     return pw.Container(
       padding: const pw.EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: pw.BoxDecoration(

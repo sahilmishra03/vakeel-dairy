@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../screens/home_screen.dart';
 import '../screens/view_all_cases_screen.dart';
 import '../screens/settings_screen.dart';
+import '../providers/locale_provider.dart';
 import '../generated/app_localizations.dart';
 
 class MainScreen extends StatefulWidget {
@@ -54,13 +56,19 @@ class _MainScreenState extends State<MainScreen> {
           type: BottomNavigationBarType.fixed,
           selectedItemColor: primaryBlack,
           unselectedItemColor: Colors.grey.shade600,
-          selectedLabelStyle: const TextStyle(
+          selectedLabelStyle: TextStyle(
             fontWeight: FontWeight.w700,
-            fontSize: 12,
+            fontSize:
+                Provider.of<LocaleProvider>(context).locale.languageCode == 'hi'
+                ? 14
+                : 12,
           ),
-          unselectedLabelStyle: const TextStyle(
+          unselectedLabelStyle: TextStyle(
             fontWeight: FontWeight.w500,
-            fontSize: 11,
+            fontSize:
+                Provider.of<LocaleProvider>(context).locale.languageCode == 'hi'
+                ? 13
+                : 11,
           ),
           items: [
             BottomNavigationBarItem(

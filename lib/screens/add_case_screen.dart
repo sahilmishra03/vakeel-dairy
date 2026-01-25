@@ -40,7 +40,6 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
     'Corporate',
     'Appellate',
   ];
-  final List<String> _statusOptions = ['Active', 'Closed'];
 
   // Modern UI Colors
   static const Color kPrimaryBlack = Color(0xFF111111);
@@ -151,30 +150,30 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                 const SizedBox(height: 20),
 
                 // --- 2. PARTIES ---
-                _buildSectionTitle("Parties Involved"),
+                _buildSectionTitle(l10n.parties),
 
                 _buildModernTextField(
-                  label: l10n.client,
+                  label: l10n.clientName,
                   controller: _clientNameController,
-                  hint: "Full Name",
+                  hint: l10n.fullName,
                   icon: Icons.person,
                 ),
 
                 const SizedBox(height: 20),
 
                 _buildModernTextField(
-                  label: "Opponent Name",
+                  label: l10n.opponentName,
                   controller: _opponentNameController,
-                  hint: "Opposing Party Name",
+                  hint: l10n.opponentPartyName,
                   icon: Icons.gavel, // Different icon to distinguish
                 ),
 
                 const SizedBox(height: 20),
 
                 _buildModernTextField(
-                  label: "Judge Name",
+                  label: l10n.judgeName,
                   controller: _judgeNameController,
-                  hint: "Honorable Judge",
+                  hint: l10n.honorableJudge,
                   icon: Icons.person_4,
                 ),
 
@@ -183,13 +182,13 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                 const SizedBox(height: 20),
 
                 // --- 3. TIMELINE ---
-                _buildSectionTitle("Timeline"),
+                _buildSectionTitle(l10n.timeline),
 
                 Row(
                   children: [
                     Expanded(
                       child: _buildDateField(
-                        label: "Previous Hearing",
+                        label: l10n.previousHearing,
                         date: _previousHearingDate,
                         onTap: () => _selectDate(context, "previous"),
                         isPast: true,
@@ -211,7 +210,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
 
                 // --- 4. STATUS ---
                 Text(
-                  l10n.status.toUpperCase(),
+                  l10n.caseStatus,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -230,46 +229,11 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                     border: Border.all(color: kBorderGrey),
                   ),
                   child: Row(
-                    children: _statusOptions.map((status) {
-                      final isSelected = _selectedStatus == status;
-                      return Expanded(
-                        child: GestureDetector(
-                          onTap: () => setState(() => _selectedStatus = status),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? kPrimaryBlack
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: isSelected
-                                  ? [
-                                      BoxShadow(
-                                        color: Colors.black.withValues(
-                                          alpha: 0.1,
-                                        ),
-                                        blurRadius: 4,
-                                        offset: const Offset(0, 2),
-                                      ),
-                                    ]
-                                  : [],
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              status,
-                              style: TextStyle(
-                                color: isSelected
-                                    ? Colors.white
-                                    : Colors.black54,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }).toList(),
+                    children: [
+                      Expanded(child: _buildStatusButton(l10n.active, l10n)),
+                      const SizedBox(width: 5),
+                      Expanded(child: _buildStatusButton(l10n.closed, l10n)),
+                    ],
                   ),
                 ),
 
@@ -388,12 +352,13 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
   }
 
   Widget _buildCaseTypeSelector() {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Case Type",
-          style: TextStyle(
+        Text(
+          l10n.caseType,
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
             color: kPrimaryBlack,
@@ -405,6 +370,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
           child: Row(
             children: _caseTypes.map((type) {
               final isSelected = _selectedCaseType == type;
+              final localizedType = _getLocalizedCaseType(type);
               return GestureDetector(
                 onTap: () => setState(() => _selectedCaseType = type),
                 child: AnimatedContainer(
@@ -431,7 +397,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                         : [],
                   ),
                   child: Text(
-                    type,
+                    localizedType,
                     style: TextStyle(
                       color: isSelected ? Colors.white : Colors.black,
                       fontWeight: FontWeight.w600,
@@ -447,12 +413,70 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
     );
   }
 
+  String _getLocalizedCaseType(String type) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (type.toLowerCase()) {
+      case 'civil':
+        return l10n.civil;
+      case 'criminal':
+        return l10n.criminal;
+      case 'family':
+        return l10n.family;
+      case 'corporate':
+        return l10n.corporate;
+      case 'appellate':
+        return l10n.appellate;
+      default:
+        return type;
+    }
+  }
+
+  Widget _buildStatusButton(String status, AppLocalizations l10n) {
+    // Convert localized status back to English for comparison
+    final englishStatus = status == l10n.active
+        ? 'Active'
+        : status == l10n.closed
+        ? 'Closed'
+        : status;
+    final isSelected = _selectedStatus == englishStatus;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedStatus = englishStatus),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          color: isSelected ? kPrimaryBlack : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ]
+              : [],
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          status,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black54,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildDateField({
     required String label,
     required DateTime? date,
     required VoidCallback onTap,
     required bool isPast,
   }) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -487,7 +511,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                   child: Text(
                     date != null
                         ? "${date.day}/${date.month}/${date.year}"
-                        : "Select Date",
+                        : l10n.selectDate,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,

@@ -36,6 +36,7 @@ flutter:
   # Generate localization files
   generate: true
 
+
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true

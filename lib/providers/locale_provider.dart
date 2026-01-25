@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocaleProvider extends ChangeNotifier {
   static const String _localeKey = 'selected_locale';
   Locale _locale = const Locale('en'); // Default to English
-  
+
   /// Supported locales
   static const List<Locale> supportedLocales = [
     Locale('en'), // English
@@ -20,7 +20,7 @@ class LocaleProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedLocaleCode = prefs.getString(_localeKey);
-      
+
       if (savedLocaleCode != null) {
         // Use saved locale
         _locale = Locale(savedLocaleCode);
@@ -29,7 +29,7 @@ class LocaleProvider extends ChangeNotifier {
         final deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
         _locale = _getSupportedLocale(deviceLocale) ?? const Locale('en');
       }
-      
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error initializing locale: $e');
@@ -43,15 +43,15 @@ class LocaleProvider extends ChangeNotifier {
   Future<void> changeLocale(String languageCode) async {
     try {
       final newLocale = Locale(languageCode);
-      
+
       // Validate that the locale is supported
       if (supportedLocales.contains(newLocale)) {
         _locale = newLocale;
-        
+
         // Save to preferences
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString(_localeKey, languageCode);
-        
+
         notifyListeners();
       } else {
         debugPrint('Unsupported locale: $languageCode');
@@ -69,14 +69,14 @@ class LocaleProvider extends ChangeNotifier {
         return supportedLocale;
       }
     }
-    
+
     // Check if device locale language code matches any supported locale
     for (Locale supportedLocale in supportedLocales) {
       if (supportedLocale.languageCode == deviceLocale.languageCode) {
         return supportedLocale;
       }
     }
-    
+
     return null; // No matching supported locale
   }
 

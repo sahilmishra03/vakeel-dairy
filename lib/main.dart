@@ -25,7 +25,7 @@ void main() async {
 
 class VakeelDairyApp extends StatelessWidget {
   final LocaleProvider localeProvider;
-  
+
   const VakeelDairyApp({super.key, required this.localeProvider});
 
   @override
@@ -38,12 +38,17 @@ class VakeelDairyApp extends StatelessWidget {
       ],
       child: Consumer2<ThemeProvider, LocaleProvider>(
         builder: (context, themeProvider, localeProvider, child) {
+          // Update theme provider with current locale
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            themeProvider.updateLocale(localeProvider.locale);
+          });
+
           return MaterialApp(
             title: 'Vakeel Dairy',
             theme: themeProvider.currentTheme,
             home: const MainScreen(),
             debugShowCheckedModeBanner: false,
-            
+
             // Localization configuration
             locale: localeProvider.locale,
             localizationsDelegates: [

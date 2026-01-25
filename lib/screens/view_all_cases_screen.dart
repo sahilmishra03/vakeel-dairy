@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'add_case_screen.dart';
 import '../models/case_model.dart';
 import '../providers/case_provider.dart';
+import '../providers/locale_provider.dart';
 import '../generated/app_localizations.dart';
 
 class ViewAllCasesScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class ViewAllCasesScreen extends StatefulWidget {
 }
 
 class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
-  String _selectedFilter = 'All Cases';
+  String _selectedFilter = '';
   final TextEditingController _searchController = TextEditingController();
 
   // Theme Constants
@@ -25,6 +26,13 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
   void initState() {
     super.initState();
     _searchController.addListener(_filterCases);
+    // Initialize with localized string after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final l10n = AppLocalizations.of(context)!;
+      setState(() {
+        _selectedFilter = l10n.allCases;
+      });
+    });
   }
 
   @override
@@ -46,6 +54,27 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
     });
   }
 
+  // Helper method to map localized filter back to English for comparison
+  String _mapLocalizedFilterToEnglish(
+    String localizedFilter,
+    AppLocalizations l10n,
+  ) {
+    switch (localizedFilter) {
+      case 'सिविल': // Hindi Civil
+        return 'Civil';
+      case 'आपराधिक': // Hindi Criminal
+        return 'Criminal';
+      case 'पारिवारिक': // Hindi Family
+        return 'Family';
+      case 'कॉर्पोरेट': // Hindi Corporate
+        return 'Corporate';
+      case 'अपीलीय': // Hindi Appellate
+        return 'Appellate';
+      default:
+        return localizedFilter; // Return as-is for English or All Cases
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -56,9 +85,14 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
         List<CaseModel> filteredCases = caseProvider.allCases;
 
         // Apply type filter
-        if (_selectedFilter != 'All Cases') {
+        if (_selectedFilter != l10n.allCases) {
+          // Map localized filter back to English for comparison
+          String filterType = _mapLocalizedFilterToEnglish(
+            _selectedFilter,
+            l10n,
+          );
           filteredCases = filteredCases
-              .where((c) => c.caseType == _selectedFilter)
+              .where((c) => c.caseType == filterType)
               .toList();
         }
 
@@ -155,10 +189,11 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
                 child: Row(
                   children: [
                     _buildFilterChip(l10n.allCases),
-                    _buildFilterChip("Civil"),
-                    _buildFilterChip("Criminal"),
-                    _buildFilterChip("Family"),
-                    _buildFilterChip("Corporate"),
+                    _buildFilterChip(l10n.civil),
+                    _buildFilterChip(l10n.criminal),
+                    _buildFilterChip(l10n.family),
+                    _buildFilterChip(l10n.corporate),
+                    _buildFilterChip(l10n.appellate),
                     const SizedBox(width: 20), // End padding
                   ],
                 ),
@@ -230,167 +265,162 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
         ? caseItem.caseType.substring(0, 2).toUpperCase()
         : "NA";
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: kBorderColor, width: 1.5),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // 1. Black Avatar Box
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: kPrimaryBlack,
-              borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: () => _editCase(caseItem.id, provider),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: kBorderColor, width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.02),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
             ),
-            child: Center(
-              child: Text(
-                typeCode,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  letterSpacing: 1,
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 1. Black Avatar Box
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: kPrimaryBlack,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Text(
+                  typeCode,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    letterSpacing: 1,
+                  ),
                 ),
               ),
             ),
-          ),
 
-          const SizedBox(width: 15),
+            const SizedBox(width: 15),
 
-          // 2. Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Title: Client vs Opponent
-                Text(
-                  "${caseItem.clientName} vs ${caseItem.opponentName}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: kPrimaryBlack,
-                    height: 1.2,
+            // 2. Details
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title: Client vs Opponent
+                  Text(
+                    "${caseItem.clientName} vs ${caseItem.opponentName}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: kPrimaryBlack,
+                      height: 1.2,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 6),
+                  const SizedBox(height: 6),
 
-                // Subtitle: Case No • Court
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: kCardBg,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        caseItem.caseNumber,
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontFamily: 'Monospace',
-                          color: Colors.grey[800],
-                          fontWeight: FontWeight.bold,
+                  // Subtitle: Case No • Court
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: kCardBg,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          caseItem.caseNumber,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontFamily: 'Monospace',
+                            color: Colors.grey[800],
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        "•  ${caseItem.courtName}",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          "•  ${caseItem.courtName}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // 3. Status & Menu
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                _buildStatusBadge(caseItem.status),
+                const SizedBox(height: 8),
+
+                // Three Dots Menu
+                SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: PopupMenuButton<String>(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.more_horiz, color: Colors.grey[400]),
+                    color: Colors.white,
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  ],
+                    onSelected: (value) {
+                      if (value == 'delete') {
+                        _deleteCase(caseItem.id, provider);
+                      }
+                    },
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: 'delete',
+                        child: Row(
+                          children: [
+                            const Icon(Icons.delete_outline, size: 18),
+                            const SizedBox(width: 10),
+                            Text(l10n.deleteCase),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-
-          // 3. Status & Menu
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              _buildStatusBadge(caseItem.status),
-              const SizedBox(height: 8),
-
-              // Three Dots Menu
-              SizedBox(
-                height: 24,
-                width: 24,
-                child: PopupMenuButton<String>(
-                  padding: EdgeInsets.zero,
-                  icon: Icon(Icons.more_horiz, color: Colors.grey[400]),
-                  color: Colors.white,
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  onSelected: (value) {
-                    if (value == 'edit') {
-                      _editCase(caseItem.id, provider);
-                    } else if (value == 'delete') {
-                      _deleteCase(caseItem.id, provider);
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'edit',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.edit_outlined, size: 18),
-                          const SizedBox(width: 10),
-                          Text(l10n.editCase),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.delete_outline, size: 18),
-                          const SizedBox(width: 10),
-                          Text(l10n.deleteCase),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   // --- Widget: Status Badge ---
   Widget _buildStatusBadge(String status) {
+    final l10n = AppLocalizations.of(context)!;
     bool isActive = status == 'Active';
+    final isHindi =
+        Provider.of<LocaleProvider>(context).locale.languageCode == 'hi';
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -401,11 +431,11 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
         ),
       ),
       child: Text(
-        status.toUpperCase(),
+        status == 'Active' ? l10n.active : l10n.closed,
         style: TextStyle(
-          fontSize: 10,
+          fontSize: isHindi ? 14 : 10, // Much larger font for Hindi
           fontWeight: FontWeight.w700,
-          color: isActive ? Colors.green.shade800 : Colors.grey.shade600,
+          color: isActive ? Colors.green.shade800 : Colors.grey.shade700,
         ),
       ),
     );
@@ -462,26 +492,33 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
   }
 
   void _deleteCase(String caseId, CaseProvider caseProvider) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
-          'Delete Case?',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          l10n.deleteCaseTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        content: const Text('This action cannot be undone.'),
+        content: Text(l10n.deleteCaseMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+            child: Text(
+              l10n.cancel,
+              style: const TextStyle(color: Colors.grey),
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text(
-              'Delete',
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            child: Text(
+              l10n.delete,
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

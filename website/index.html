@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vakeel Diary - The Modern Advocate's Portal</title>
+    <title>Vakeel Diary</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>" />
+    <link rel="apple-touch-icon" href="../assets/app_icon/icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#111111" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
@@ -14,6 +18,18 @@
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+      // --- FIX: FORCE SCROLL TO TOP ON RELOAD ---
+      if (history.scrollRestoration) {
+        history.scrollRestoration = "manual";
+      } else {
+        window.onbeforeunload = function () {
+          window.scrollTo(0, 0);
+        };
+      }
+      window.onload = function () {
+        window.scrollTo(0, 0);
+      };
+
       tailwind.config = {
         theme: {
           extend: {
@@ -45,12 +61,29 @@
         overflow-x: hidden;
       }
 
-      /* Smooth Scrolling */
       html {
         scroll-behavior: smooth;
       }
 
-      /* Mockup CSS to match the App Screenshot */
+      /* Modal Styles */
+      .modal {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+      }
+      .modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .modal-content {
+        transform: scale(0.95);
+        transition: all 0.3s ease-in-out;
+      }
+      .modal.active .modal-content {
+        transform: scale(1);
+      }
+
+      /* Mockup CSS */
       .app-mockup {
         background-color: #ffffff;
         border: 8px solid #111111;
@@ -106,14 +139,14 @@
       }
     </style>
   </head>
-  <body class="antialiased">
+  <body class="antialiased" id="top">
     <nav
       class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-brand-border"
     >
       <div
         class="container mx-auto px-6 h-20 flex justify-between items-center"
       >
-        <a href="#" class="flex flex-col leading-tight group">
+        <a href="#top" class="flex flex-col leading-tight group">
           <span class="text-2xl font-black tracking-tight text-brand-black"
             >Vakeel Diary</span
           >
@@ -135,14 +168,24 @@
             >How it Works</a
           >
           <a
-            href="#testimonials"
-            class="text-gray-600 hover:text-black transition-colors"
-            >Reviews</a
+            href="#coming-soon"
+            class="text-gray-600 hover:text-black transition-colors flex items-center gap-2"
           >
+            <span class="relative flex h-2 w-2">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-2 w-2 bg-black"
+              ></span>
+            </span>
+            Coming Soon
+          </a>
         </div>
 
         <a
-          href="#"
+          href="https://drive.usercontent.google.com/download?id=1-79i6VvJsh_GzYD7O4ipPLRWqF0p1zgJ&export=download&authuser=0"
+          target="_blank"
           class="bg-brand-black text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-800 transition-all transform hover:scale-105 shadow-lg"
         >
           Download App
@@ -182,17 +225,14 @@
             <div
               class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
-              <button
+              <a
+                href="https://drive.usercontent.google.com/download?id=1-79i6VvJsh_GzYD7O4ipPLRWqF0p1zgJ&export=download&authuser=0"
+                target="_blank"
                 class="bg-brand-black text-white h-14 px-8 rounded-full font-bold text-lg flex items-center justify-center gap-3 hover:bg-gray-900 transition-all shadow-xl"
               >
                 <i class="fab fa-google-play text-xl"></i>
                 <span>Get on Android</span>
-              </button>
-              <button
-                class="bg-white text-brand-black border border-gray-300 h-14 px-8 rounded-full font-bold text-lg hover:border-black hover:bg-gray-50 transition-all"
-              >
-                Learn More
-              </button>
+              </a>
             </div>
 
             <div
@@ -217,7 +257,6 @@
             <div
               class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gray-50 rounded-full z-0"
             ></div>
-
             <div class="app-mockup z-10 relative">
               <div class="mockup-notch"></div>
               <div class="h-full w-full bg-white flex flex-col pt-8 px-5 pb-5">
@@ -232,7 +271,6 @@
                   </div>
                   <i class="far fa-bell text-xl text-black"></i>
                 </div>
-
                 <div
                   class="bg-[#111111] rounded-3xl p-6 text-white mb-8 shadow-xl"
                 >
@@ -248,14 +286,12 @@
                   </p>
                   <h3 class="text-6xl font-bold">0</h3>
                 </div>
-
                 <div class="flex justify-between items-end mb-10">
                   <h4 class="text-lg font-bold text-black">Today's Hearings</h4>
                   <span class="text-xs text-gray-400 underline cursor-pointer"
                     >See All</span
                   >
                 </div>
-
                 <div
                   class="flex flex-col items-center justify-center flex-grow opacity-60"
                 >
@@ -269,7 +305,6 @@
                   </h5>
                   <p class="text-xs text-gray-400">Enjoy your free time!</p>
                 </div>
-
                 <div class="absolute bottom-6 right-6">
                   <div
                     class="bg-black text-white px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2"
@@ -296,7 +331,6 @@
             matters: your cases.
           </p>
         </div>
-
         <div class="grid md:grid-cols-3 gap-8">
           <div
             class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1"
@@ -314,7 +348,6 @@
               structured, easily searchable database.
             </p>
           </div>
-
           <div
             class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1"
           >
@@ -331,7 +364,6 @@
               "Today's Hearings" dashboard.
             </p>
           </div>
-
           <div
             class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1"
           >
@@ -350,155 +382,200 @@
       </div>
     </section>
 
-    <section class="py-20 bg-white">
-      <div class="container mx-auto px-6">
-        <div
-          class="flex flex-col md:flex-row items-center justify-between mb-12"
-        >
-          <h2 class="text-3xl font-black text-brand-black">
-            Clean. Fast. Efficient.
-          </h2>
-          <div class="flex gap-2">
-            <span class="w-3 h-3 rounded-full bg-black"></span>
-            <span class="w-3 h-3 rounded-full bg-gray-300"></span>
-            <span class="w-3 h-3 rounded-full bg-gray-300"></span>
+    <section class="py-20 bg-white" id="how-it-works">
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="text-3xl font-black text-brand-black mb-12">Clean. Fast. Efficient.</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-all hover:-translate-y-1">
+            <div class="aspect-[9/16] bg-gray-50 flex items-center justify-center p-2">
+              <img src="assets/1.jpg" alt="Vakeel Diary Screenshot 1" class="w-full h-full object-contain rounded-lg">
+            </div>
+            <div class="p-4">
+              <h3 class="text-sm font-bold text-black">Dashboard</h3>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-all hover:-translate-y-1">
+            <div class="aspect-[9/16] bg-gray-50 flex items-center justify-center p-2">
+              <img src="assets/2.jpg" alt="Vakeel Diary Screenshot 2" class="w-full h-full object-contain rounded-lg">
+            </div>
+            <div class="p-4">
+              <h3 class="text-sm font-bold text-black">New Entry</h3>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-all hover:-translate-y-1">
+            <div class="aspect-[9/16] bg-gray-50 flex items-center justify-center p-2">
+              <img src="assets/3.jpg" alt="Vakeel Diary Screenshot 3" class="w-full h-full object-contain rounded-lg">
+            </div>
+            <div class="p-4">
+              <h3 class="text-sm font-bold text-black">Case Directory</h3>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-all hover:-translate-y-1">
+            <div class="aspect-[9/16] bg-gray-50 flex items-center justify-center p-2">
+              <img src="assets/4.jpg" alt="Vakeel Diary Screenshot 4" class="w-full h-full object-contain rounded-lg">
+            </div>
+            <div class="p-4">
+              <h3 class="text-sm font-bold text-black">Settings</h3>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl border border-gray-800 overflow-hidden shadow-sm hover:shadow-lg transition-all hover:-translate-y-1">
+            <div class="aspect-[9/16] bg-gray-50 flex items-center justify-center p-2">
+              <img src="assets/5.jpg" alt="Vakeel Diary Screenshot 5" class="w-full h-full object-contain rounded-lg">
+            </div>
+            <div class="p-4">
+              <h3 class="text-sm font-bold text-black">PDF Export</h3>
+            </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div class="bg-brand-gray rounded-3xl p-4 border border-brand-border">
-            <div
-              class="aspect-[1/2] bg-white rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group"
-            >
-              <div
-                class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-              >
-                <span
-                  class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold"
-                  >Home</span
-                >
-              </div>
-              <i class="fas fa-home text-4xl text-gray-200 mb-4"></i>
-              <p class="text-xs font-bold text-gray-400">Dashboard</p>
-            </div>
-          </div>
-          <div class="bg-brand-gray rounded-3xl p-4 border border-brand-border">
-            <div
-              class="aspect-[1/2] bg-white rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group"
-            >
-              <div
-                class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-              >
-                <span
-                  class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold"
-                  >Add Case</span
-                >
-              </div>
-              <i class="fas fa-plus-circle text-4xl text-gray-200 mb-4"></i>
-              <p class="text-xs font-bold text-gray-400">New Entry</p>
-            </div>
-          </div>
-          <div class="bg-brand-gray rounded-3xl p-4 border border-brand-border">
-            <div
-              class="aspect-[1/2] bg-white rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group"
-            >
-              <div
-                class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-              >
-                <span
-                  class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold"
-                  >List</span
-                >
-              </div>
-              <i class="fas fa-list text-4xl text-gray-200 mb-4"></i>
-              <p class="text-xs font-bold text-gray-400">Case Directory</p>
-            </div>
-          </div>
-          <div class="bg-brand-gray rounded-3xl p-4 border border-brand-border">
-            <div
-              class="aspect-[1/2] bg-white rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group"
-            >
-              <div
-                class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-              >
-                <span
-                  class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold"
-                  >Settings</span
-                >
-              </div>
-              <i class="fas fa-cog text-4xl text-gray-200 mb-4"></i>
-              <p class="text-xs font-bold text-gray-400">Settings</p>
-            </div>
-          </div>
+        <div class="flex justify-center mt-8 space-x-2">
+          <span class="block w-3 h-3 bg-black rounded-full"></span>
+          <span class="block w-3 h-3 bg-gray-300 rounded-full"></span>
+          <span class="block w-3 h-3 bg-gray-300 rounded-full"></span>
         </div>
       </div>
     </section>
 
-    <section class="py-20 bg-brand-black text-white">
-      <div class="container mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+    <section
+      id="coming-soon"
+      class="py-24 bg-brand-black text-white relative overflow-hidden"
+    >
+      <div
+        class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"
+      ></div>
+      <div class="container mx-auto px-6 relative z-10">
+        <div
+          class="flex flex-col lg:flex-row items-start justify-between gap-12 mb-16"
+        >
+          <div class="max-w-xl">
             <span
-              class="text-gray-400 font-bold tracking-wider text-sm uppercase mb-2 block"
-              >Offline First</span
+              class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-white font-bold uppercase tracking-wider text-xs mb-6"
+              >Upcoming Features</span
             >
             <h2 class="text-4xl lg:text-5xl font-black mb-6">
-              Your Data.<br />On Your Device.
+              Building the Future of<br />Legal Tech
             </h2>
-            <p class="text-gray-400 text-lg mb-8 max-w-md">
-              Vakeel Diary works completely offline using local database
-              technology. No internet needed to access your case files in court.
+            <p class="text-gray-400 text-lg">
+              We are just getting started. Here is a sneak peek at the powerful
+              features currently in development for Vakeel Diary.
             </p>
-            <ul class="space-y-4">
-              <li class="flex items-center gap-4">
-                <div
-                  class="w-6 h-6 rounded-full bg-white flex items-center justify-center"
-                >
-                  <i class="fas fa-check text-black text-xs"></i>
-                </div>
-                <span class="font-medium">Secure Local Storage</span>
-              </li>
-              <li class="flex items-center gap-4">
-                <div
-                  class="w-6 h-6 rounded-full bg-white flex items-center justify-center"
-                >
-                  <i class="fas fa-check text-black text-xs"></i>
-                </div>
-                <span class="font-medium">Lightning Fast Search</span>
-              </li>
-              <li class="flex items-center gap-4">
-                <div
-                  class="w-6 h-6 rounded-full bg-white flex items-center justify-center"
-                >
-                  <i class="fas fa-check text-black text-xs"></i>
-                </div>
-                <span class="font-medium">Dark Mode Support</span>
-              </li>
-            </ul>
+          </div>
+          <div
+            class="flex items-center gap-3 bg-white/10 px-5 py-3 rounded-2xl border border-white/10"
+          >
+            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="font-mono text-sm font-bold">Next Update: v1.1.0</span>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div
+            class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-white rounded-xl flex items-center justify-center"
+              >
+                <i class="fas fa-calendar-alt text-black text-xl"></i>
+              </div>
+              <span
+                class="bg-white/20 text-white text-[10px] font-bold px-2 py-1 rounded border border-white/20 uppercase"
+                >Coming Soon</span
+              >
+            </div>
+            <h3 class="text-xl font-bold mb-3">Advocate Calendar</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              A dedicated visual calendar to track all hearings, court holidays,
+              and client meetings in one place.
+            </p>
           </div>
 
           <div
-            class="bg-white/10 p-8 rounded-3xl border border-white/10 backdrop-blur-sm"
+            class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group"
           >
-            <div class="grid grid-cols-2 gap-4">
-              <div class="bg-white text-black p-6 rounded-2xl">
-                <h3 class="text-4xl font-black mb-1">100%</h3>
-                <p class="text-xs font-bold text-gray-500 uppercase">Offline</p>
-              </div>
-              <div class="bg-black border border-white/20 p-6 rounded-2xl">
-                <h3 class="text-4xl font-black mb-1">0s</h3>
-                <p class="text-xs font-bold text-gray-500 uppercase">Latency</p>
-              </div>
+            <div class="flex justify-between items-start mb-6">
               <div
-                class="col-span-2 bg-gray-800 p-6 rounded-2xl flex justify-between items-center"
+                class="w-12 h-12 bg-white rounded-xl flex items-center justify-center"
               >
-                <div>
-                  <h3 class="text-xl font-bold">Backup Ready</h3>
-                  <p class="text-xs text-gray-400">Export to PDF anytime</p>
-                </div>
-                <i class="fas fa-download text-2xl text-white"></i>
+                <i class="fas fa-user-tie text-black text-xl"></i>
               </div>
+              <span
+                class="bg-white/20 text-white text-[10px] font-bold px-2 py-1 rounded border border-white/20 uppercase"
+                >Coming Soon</span
+              >
             </div>
+            <h3 class="text-xl font-bold mb-3">Client Management</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Comprehensive directory to save client contact details, case
+              history, and documents securely.
+            </p>
+          </div>
+
+          <div
+            class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-white rounded-xl flex items-center justify-center"
+              >
+                <i class="fas fa-language text-black text-xl"></i>
+              </div>
+              <span
+                class="bg-white/20 text-white text-[10px] font-bold px-2 py-1 rounded border border-white/20 uppercase"
+                >Coming Soon</span
+              >
+            </div>
+            <h3 class="text-xl font-bold mb-3">Multiple Language</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Currently supports English & Hindi. Expanding to more regional
+              languages to serve advocates across India.
+            </p>
+          </div>
+
+          <div
+            class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-white rounded-xl flex items-center justify-center"
+              >
+                <i class="fas fa-bell text-black text-xl"></i>
+              </div>
+              <span
+                class="bg-white/20 text-white text-[10px] font-bold px-2 py-1 rounded border border-white/20 uppercase"
+                >Coming Soon</span
+              >
+            </div>
+            <h3 class="text-xl font-bold mb-3">Smart Notifications</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Get timely reminders for upcoming hearings, case deadlines, and important court dates directly on your device.
+            </p>
+          </div>
+
+          <div
+            class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-all hover:-translate-y-2 group"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-white rounded-xl flex items-center justify-center"
+              >
+                <i class="fas fa-moon text-black text-xl"></i>
+              </div>
+              <span
+                class="bg-white/20 text-white text-[10px] font-bold px-2 py-1 rounded border border-white/20 uppercase"
+                >Coming Soon</span
+              >
+            </div>
+            <h3 class="text-xl font-bold mb-3">Dark Mode Support</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Reduce eye strain with a sleek, battery-saving dark interface
+              designed for late-night case preparation.
+            </p>
           </div>
         </div>
       </div>
@@ -521,16 +598,35 @@
           <div class="flex gap-10 text-sm">
             <div class="flex flex-col gap-4">
               <h4 class="font-bold text-black">Product</h4>
-              <a href="#" class="text-gray-500 hover:text-black">Features</a>
-              <a href="#" class="text-gray-500 hover:text-black">Download</a>
-              <a href="#" class="text-gray-500 hover:text-black">Updates</a>
+              <a
+                href="#features"
+                class="text-gray-500 hover:text-black transition-colors"
+                >Features</a
+              >
+              <a
+                href="https://drive.usercontent.google.com/download?id=1-79i6VvJsh_GzYD7O4ipPLRWqF0p1zgJ&export=download&authuser=0"
+                target="_blank"
+                class="text-gray-500 hover:text-black transition-colors"
+                >Download</a
+              >
+              <a
+                href="#coming-soon"
+                class="text-gray-500 hover:text-black transition-colors"
+                >Upcoming Features</a
+              >
             </div>
             <div class="flex flex-col gap-4">
               <h4 class="font-bold text-black">Legal</h4>
-              <a href="#" class="text-gray-500 hover:text-black"
+              <a
+                href="javascript:void(0)"
+                onclick="openModal('privacyModal')"
+                class="text-gray-500 hover:text-black transition-colors"
                 >Privacy Policy</a
               >
-              <a href="#" class="text-gray-500 hover:text-black"
+              <a
+                href="javascript:void(0)"
+                onclick="openModal('termsModal')"
+                class="text-gray-500 hover:text-black transition-colors"
                 >Terms of Service</a
               >
             </div>
@@ -543,19 +639,160 @@
           <p class="text-xs text-gray-400">
             © 2026 Vakeel Diary. All rights reserved.
           </p>
-          <div class="flex gap-4 mt-4 md:mt-0">
-            <a href="#" class="text-gray-400 hover:text-black"
-              ><i class="fab fa-twitter"></i
-            ></a>
-            <a href="#" class="text-gray-400 hover:text-black"
-              ><i class="fab fa-linkedin"></i
-            ></a>
-            <a href="#" class="text-gray-400 hover:text-black"
-              ><i class="fab fa-github"></i
-            ></a>
+          <div
+            class="flex items-center gap-1 mt-4 md:mt-0 text-sm font-medium text-gray-600 bg-gray-50 px-4 py-2 rounded-full border border-gray-100"
+          >
+            <span
+              >Designed with
+              <span class="text-red-500 animate-pulse">❤️</span> by</span
+            >
+            <a
+              href="https://www.linkedin.com/in/krishgupta7/"
+              target="_blank"
+              class="text-black font-bold hover:text-blue-600 hover:underline transition-colors"
+              >Krish</a
+            >
+            <span>&</span>
+            <a
+              href="https://www.linkedin.com/in/sahilmishra03/"
+              target="_blank"
+              class="text-black font-bold hover:text-blue-600 hover:underline transition-colors"
+              >Sahil</a
+            >
           </div>
         </div>
       </div>
     </footer>
+
+    <div
+      id="privacyModal"
+      class="modal fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+    >
+      <div
+        class="modal-content bg-white w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-3xl p-8 relative shadow-2xl"
+      >
+        <button
+          onclick="closeModal('privacyModal')"
+          class="absolute top-4 right-4 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+        >
+          <i class="fas fa-times text-gray-600"></i>
+        </button>
+        <h2 class="text-2xl font-black mb-4">Privacy Policy</h2>
+        <div class="prose prose-sm text-gray-600">
+          <p class="mb-4"><strong>Effective Date:</strong> January 25, 2026</p>
+          <p class="mb-4">
+            At Vakeel Diary, we prioritize your privacy. This policy outlines
+            how we handle your data.
+          </p>
+          <h3 class="text-lg font-bold text-black mb-2">1. Data Collection</h3>
+          <p class="mb-4">
+            Vakeel Diary is an <strong>offline-first</strong> application. All
+            case data, client details, and notes are stored locally on your
+            device using Hive database technology. We do not upload your
+            sensitive case data to any cloud server by default.
+          </p>
+          <h3 class="text-lg font-bold text-black mb-2">2. Permissions</h3>
+          <p class="mb-4">
+            We may request permissions for storage (to export PDF reports) and
+            notifications (for hearing reminders). These are used solely for app
+            functionality.
+          </p>
+          <h3 class="text-lg font-bold text-black mb-2">
+            3. Third-Party Services
+          </h3>
+          <p class="mb-4">
+            We do not share your personal data with third-party advertisers.
+          </p>
+          <h3 class="text-lg font-bold text-black mb-2">4. Contact</h3>
+          <p>If you have questions, please contact our support team.</p>
+        </div>
+        <div class="mt-8 text-center">
+          <button
+            onclick="closeModal('privacyModal')"
+            class="bg-brand-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="termsModal"
+      class="modal fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+    >
+      <div
+        class="modal-content bg-white w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-3xl p-8 relative shadow-2xl"
+      >
+        <button
+          onclick="closeModal('termsModal')"
+          class="absolute top-4 right-4 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+        >
+          <i class="fas fa-times text-gray-600"></i>
+        </button>
+        <h2 class="text-2xl font-black mb-4">Terms of Service</h2>
+        <div class="prose prose-sm text-gray-600">
+          <p class="mb-4"><strong>Effective Date:</strong> January 25, 2026</p>
+          <p class="mb-4">By using Vakeel Diary, you agree to these terms.</p>
+          <h3 class="text-lg font-bold text-black mb-2">1. Usage License</h3>
+          <p class="mb-4">
+            Vakeel Diary grants you a personal, non-exclusive license to use the
+            app for managing your legal practice.
+          </p>
+          <h3 class="text-lg font-bold text-black mb-2">
+            2. User Responsibility
+          </h3>
+          <p class="mb-4">
+            You are responsible for maintaining the backup of your device data.
+            Since Vakeel Diary stores data offline, deleting the app may result
+            in data loss unless you have exported your data.
+          </p>
+          <h3 class="text-lg font-bold text-black mb-2">
+            3. Limitation of Liability
+          </h3>
+          <p class="mb-4">
+            Vakeel Diary provides the software "as is". We are not liable for
+            any data loss or missed court hearings resulting from software
+            errors or device failure.
+          </p>
+        </div>
+        <div class="mt-8 text-center">
+          <button
+            onclick="closeModal('termsModal')"
+            class="bg-brand-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors"
+          >
+            I Agree
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove("hidden");
+        // Small timeout to allow display:block to apply before opacity transition
+        setTimeout(() => {
+          modal.classList.add("active");
+        }, 10);
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
+      }
+
+      function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove("active");
+        setTimeout(() => {
+          modal.classList.add("hidden"); // Hide after transition
+        }, 300);
+        document.body.style.overflow = "auto";
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function (event) {
+        if (event.target.classList.contains("modal")) {
+          closeModal(event.target.id);
+        }
+      };
+    </script>
   </body>
 </html>

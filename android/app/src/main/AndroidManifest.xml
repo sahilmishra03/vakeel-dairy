@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     
     <application
-        android:label="vakeel_dairy"
+        android:label="Vakeel Dairy"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

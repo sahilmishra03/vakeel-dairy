@@ -12,6 +12,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get appTitle => 'वकील डायरी';
 
   @override
+  String get advocatePortal => 'वकील पोर्टल';
+
+  @override
   String get home => 'होम';
 
   @override
@@ -136,6 +139,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get deleteCase => 'केस हटाएं';
 
   @override
+  String get deleteCaseTitle => 'केस हटाएं?';
+
+  @override
+  String get deleteCaseMessage => 'यह क्रिया पूर्ववत नहीं की जा सकती।';
+
+  @override
   String get caseNumberHint => 'केस नंबर दर्ज करें';
 
   @override
@@ -167,4 +176,58 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get searchCases => 'केस खोजें...';
+
+  @override
+  String get civil => 'सिविल';
+
+  @override
+  String get criminal => 'आपराधिक';
+
+  @override
+  String get family => 'पारिवारिक';
+
+  @override
+  String get corporate => 'कॉर्पोरेट';
+
+  @override
+  String get appellate => 'अपीलीय';
+
+  @override
+  String get parties => 'पक्षकार';
+
+  @override
+  String get clientName => 'पक्षकार का नाम';
+
+  @override
+  String get opponentName => 'विपक्षी का नाम';
+
+  @override
+  String get judgeName => 'न्यायाधीश का नाम';
+
+  @override
+  String get timeline => 'समयरेखा';
+
+  @override
+  String get previousHearing => 'पिछली सुनवाई';
+
+  @override
+  String get caseStatus => 'केस की स्थिति';
+
+  @override
+  String get caseType => 'केस का प्रकार';
+
+  @override
+  String get fullName => 'पूरा नाम';
+
+  @override
+  String get opponentPartyName => 'विपक्षी पक्ष का नाम';
+
+  @override
+  String get honorableJudge => 'माननीय न्यायाधीश';
+
+  @override
+  String get selectDate => 'तारीख चुनें';
+
+  @override
+  String get comingSoon => 'जल्द आ रहा है';
 }
