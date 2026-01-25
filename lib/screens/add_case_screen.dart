@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 // Ensure these imports match your folder structure
 import '../models/case_model.dart';
 import '../providers/case_provider.dart';
+import '../generated/app_localizations.dart';
 
 class AddCaseScreen extends StatefulWidget {
   final CaseModel? caseModel;
@@ -90,6 +91,8 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -101,7 +104,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.caseModel != null ? 'Edit Case File' : 'New Case File',
+          widget.caseModel != null ? l10n.editCase : l10n.addCase,
           style: const TextStyle(
             color: kPrimaryBlack,
             fontWeight: FontWeight.w900, // Extra Bold
@@ -120,10 +123,10 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // --- 1. CASE IDENTITY ---
-                _buildSectionTitle("Case Identity"),
+                _buildSectionTitle(l10n.caseDetails),
 
                 _buildModernTextField(
-                  label: "Case Number",
+                  label: l10n.caseNumber,
                   controller: _caseNoController,
                   hint: "e.g. CR-2024-892",
                   icon: Icons.tag,
@@ -137,7 +140,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                 const SizedBox(height: 20),
 
                 _buildModernTextField(
-                  label: "Court Name",
+                  label: l10n.court,
                   controller: _courtNameController,
                   hint: "e.g. High Court, Room 4",
                   icon: Icons.account_balance,
@@ -151,7 +154,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                 _buildSectionTitle("Parties Involved"),
 
                 _buildModernTextField(
-                  label: "Client Name",
+                  label: l10n.client,
                   controller: _clientNameController,
                   hint: "Full Name",
                   icon: Icons.person,
@@ -195,7 +198,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                     const SizedBox(width: 15),
                     Expanded(
                       child: _buildDateField(
-                        label: "Next Hearing",
+                        label: l10n.nextHearing,
                         date: _nextHearingDate,
                         onTap: () => _selectDate(context, "next"),
                         isPast: false, // Highlights the next date
@@ -208,7 +211,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
 
                 // --- 4. STATUS ---
                 Text(
-                  "CASE STATUS",
+                  l10n.status.toUpperCase(),
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -288,9 +291,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                       ),
                     ),
                     child: Text(
-                      widget.caseModel != null
-                          ? "Save Changes"
-                          : "Create Case File",
+                      widget.caseModel != null ? l10n.save : l10n.addCase,
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -422,7 +423,7 @@ class _AddCaseScreenState extends State<AddCaseScreen> {
                     boxShadow: isSelected
                         ? [
                             BoxShadow(
-                              color: kPrimaryBlack.withOpacity(0.2),
+                              color: kPrimaryBlack.withValues(alpha: 0.2),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),

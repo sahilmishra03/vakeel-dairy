@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vakeel Diary - The Modern Advocate's Portal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                black: "#111111",
+                dark: "#1A1A1A",
+                gray: "#F5F5F5",
+                border: "#E5E5E5",
+                text: "#666666",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 10px 40px -10px rgba(0,0,0,0.08)",
+              glow: "0 0 20px rgba(0,0,0,0.1)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #ffffff;
+        color: #111111;
+        overflow-x: hidden;
+      }
+
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Mockup CSS to match the App Screenshot */
+      .app-mockup {
+        background-color: #ffffff;
+        border: 8px solid #111111;
+        border-radius: 2.5rem;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        aspect-ratio: 9/19;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .mockup-notch {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40%;
+        height: 25px;
+        background-color: #111111;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        z-index: 20;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      /* Animations */
+      .fade-up {
+        animation: fadeUp 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <nav
+      class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-brand-border"
+    >
+      <div
+        class="container mx-auto px-6 h-20 flex justify-between items-center"
+      >
+        <a href="#" class="flex flex-col leading-tight group">
+          <span class="text-2xl font-black tracking-tight text-brand-black"
+            >Vakeel Diary</span
+          >
+          <span
+            class="text-[10px] font-semibold text-gray-500 uppercase tracking-widest"
+            >Advocate Portal</span
+          >
+        </a>
+
+        <div class="hidden md:flex items-center gap-8 font-medium text-sm">
+          <a
+            href="#features"
+            class="text-gray-600 hover:text-black transition-colors"
+            >Features</a
+          >
+          <a
+            href="#how-it-works"
+            class="text-gray-600 hover:text-black transition-colors"
+            >How it Works</a
+          >
+          <a
+            href="#testimonials"
+            class="text-gray-600 hover:text-black transition-colors"
+            >Reviews</a
+          >
+        </div>
+
+        <a
+          href="#"
+          class="bg-brand-black text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-800 transition-all transform hover:scale-105 shadow-lg"
+        >
+          Download App
+        </a>
+      </div>
+    </nav>
+
+    <section class="pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          <div
+            class="lg:w-1/2 text-center lg:text-left fade-up"
+            style="animation-delay: 0.1s"
+          >
+            <div
+              class="inline-block px-4 py-1.5 rounded-full bg-brand-gray border border-brand-border mb-6"
+            >
+              <span
+                class="text-xs font-bold text-gray-600 uppercase tracking-wider"
+                >🚀 V 1.0.0 Live Now</span
+              >
+            </div>
+            <h1
+              class="text-5xl lg:text-7xl font-black text-brand-black leading-[1.1] mb-6 tracking-tight"
+            >
+              Your Law Practice,<br />
+              <span class="text-gray-400">Simplified.</span>
+            </h1>
+            <p
+              class="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0"
+            >
+              Manage hearings, track cases, and organize clients in a clean,
+              distraction-free monochrome interface. Built for the modern Indian
+              advocate.
+            </p>
+
+            <div
+              class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            >
+              <button
+                class="bg-brand-black text-white h-14 px-8 rounded-full font-bold text-lg flex items-center justify-center gap-3 hover:bg-gray-900 transition-all shadow-xl"
+              >
+                <i class="fab fa-google-play text-xl"></i>
+                <span>Get on Android</span>
+              </button>
+              <button
+                class="bg-white text-brand-black border border-gray-300 h-14 px-8 rounded-full font-bold text-lg hover:border-black hover:bg-gray-50 transition-all"
+              >
+                Learn More
+              </button>
+            </div>
+
+            <div
+              class="mt-10 flex items-center justify-center lg:justify-start gap-4 text-sm text-gray-500 font-medium"
+            >
+              <div class="flex -space-x-2">
+                <div
+                  class="w-8 h-8 rounded-full bg-gray-200 border-2 border-white"
+                ></div>
+                <div
+                  class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white"
+                ></div>
+                <div
+                  class="w-8 h-8 rounded-full bg-gray-400 border-2 border-white"
+                ></div>
+              </div>
+              <p>Trusted by 100+ Advocates</p>
+            </div>
+          </div>
+
+          <div class="lg:w-1/2 relative fade-up" style="animation-delay: 0.3s">
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gray-50 rounded-full z-0"
+            ></div>
+
+            <div class="app-mockup z-10 relative">
+              <div class="mockup-notch"></div>
+              <div class="h-full w-full bg-white flex flex-col pt-8 px-5 pb-5">
+                <div class="flex justify-between items-center mb-6">
+                  <div>
+                    <h2 class="text-xl font-black text-brand-black">
+                      Vakeel Diary
+                    </h2>
+                    <p class="text-xs text-gray-400 font-medium">
+                      Advocate Portal
+                    </p>
+                  </div>
+                  <i class="far fa-bell text-xl text-black"></i>
+                </div>
+
+                <div
+                  class="bg-[#111111] rounded-3xl p-6 text-white mb-8 shadow-xl"
+                >
+                  <div class="flex justify-between items-start mb-6">
+                    <i class="fas fa-gavel text-2xl"></i>
+                    <span
+                      class="bg-gray-800 text-[10px] px-3 py-1 rounded-full text-gray-300"
+                      >0 scheduled</span
+                    >
+                  </div>
+                  <p class="text-gray-400 text-sm font-medium mb-1">
+                    Total Active Cases
+                  </p>
+                  <h3 class="text-6xl font-bold">0</h3>
+                </div>
+
+                <div class="flex justify-between items-end mb-10">
+                  <h4 class="text-lg font-bold text-black">Today's Hearings</h4>
+                  <span class="text-xs text-gray-400 underline cursor-pointer"
+                    >See All</span
+                  >
+                </div>
+
+                <div
+                  class="flex flex-col items-center justify-center flex-grow opacity-60"
+                >
+                  <div
+                    class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4"
+                  >
+                    <i class="fas fa-coffee text-2xl text-gray-400"></i>
+                  </div>
+                  <h5 class="text-sm font-bold text-gray-800 mb-1">
+                    No hearings today
+                  </h5>
+                  <p class="text-xs text-gray-400">Enjoy your free time!</p>
+                </div>
+
+                <div class="absolute bottom-6 right-6">
+                  <div
+                    class="bg-black text-white px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2"
+                  >
+                    <i class="fas fa-plus text-xs"></i>
+                    <span class="text-xs font-bold">Add Case</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="py-20 bg-brand-gray">
+      <div class="container mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <h2 class="text-3xl font-black text-brand-black mb-4">
+            Everything You Need.<br />Nothing You Don't.
+          </h2>
+          <p class="text-gray-500">
+            A monochrome masterpiece designed to keep your focus on what
+            matters: your cases.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div
+            class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1"
+          >
+            <div
+              class="w-12 h-12 bg-black rounded-xl flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-briefcase text-white text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-brand-black mb-3">
+              Case Management
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Store case numbers, client details, and court information in a
+              structured, easily searchable database.
+            </p>
+          </div>
+
+          <div
+            class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1"
+          >
+            <div
+              class="w-12 h-12 bg-black rounded-xl flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-calendar-check text-white text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-brand-black mb-3">
+              Hearing Tracker
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Never miss a date. View daily schedules at a glance with our
+              "Today's Hearings" dashboard.
+            </p>
+          </div>
+
+          <div
+            class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1"
+          >
+            <div
+              class="w-12 h-12 bg-black rounded-xl flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-file-pdf text-white text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-brand-black mb-3">PDF Exports</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Generate professional daily causelists or full case history
+              reports in PDF format with one tap.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between mb-12"
+        >
+          <h2 class="text-3xl font-black text-brand-black">
+            Clean. Fast. Efficient.
+          </h2>
+          <div class="flex gap-2">
+            <span class="w-3 h-3 rounded-full bg-black"></span>
+            <span class="w-3 h-3 rounded-full bg-gray-300"></span>
+            <span class="w-3 h-3 rounded-full bg-gray-300"></span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="bg-brand-gray rounded-3xl p-4 border border-brand-border">
+            <div
+              class="aspect-[1/2] bg-white rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group"
+            >
+              <div
+                class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold"
+                  >Home</span
+                >
+              </div>
+              <i class="fas fa-home text-4xl text-gray-200 mb-4"></i>
+              <p class="text-xs font-bold text-gray-400">Dashboard</p>
+            </div>
+          </div>
+          <div class="bg-brand-gray rounded-3xl p-4 border border-brand-border">
+            <div
+              class="aspect-[1/2] bg-white rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group"
+            >
+              <div
+                class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold"
+                  >Add Case</span
+                >
+              </div>
+              <i class="fas fa-plus-circle text-4xl text-gray-200 mb-4"></i>
+              <p class="text-xs font-bold text-gray-400">New Entry</p>
+            </div>
+          </div>
+          <div class="bg-brand-gray rounded-3xl p-4 border border-brand-border">
+            <div
+              class="aspect-[1/2] bg-white rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group"
+            >
+              <div
+                class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold"
+                  >List</span
+                >
+              </div>
+              <i class="fas fa-list text-4xl text-gray-200 mb-4"></i>
+              <p class="text-xs font-bold text-gray-400">Case Directory</p>
+            </div>
+          </div>
+          <div class="bg-brand-gray rounded-3xl p-4 border border-brand-border">
+            <div
+              class="aspect-[1/2] bg-white rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden group"
+            >
+              <div
+                class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold"
+                  >Settings</span
+                >
+              </div>
+              <i class="fas fa-cog text-4xl text-gray-200 mb-4"></i>
+              <p class="text-xs font-bold text-gray-400">Settings</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-brand-black text-white">
+      <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <span
+              class="text-gray-400 font-bold tracking-wider text-sm uppercase mb-2 block"
+              >Offline First</span
+            >
+            <h2 class="text-4xl lg:text-5xl font-black mb-6">
+              Your Data.<br />On Your Device.
+            </h2>
+            <p class="text-gray-400 text-lg mb-8 max-w-md">
+              Vakeel Diary works completely offline using local database
+              technology. No internet needed to access your case files in court.
+            </p>
+            <ul class="space-y-4">
+              <li class="flex items-center gap-4">
+                <div
+                  class="w-6 h-6 rounded-full bg-white flex items-center justify-center"
+                >
+                  <i class="fas fa-check text-black text-xs"></i>
+                </div>
+                <span class="font-medium">Secure Local Storage</span>
+              </li>
+              <li class="flex items-center gap-4">
+                <div
+                  class="w-6 h-6 rounded-full bg-white flex items-center justify-center"
+                >
+                  <i class="fas fa-check text-black text-xs"></i>
+                </div>
+                <span class="font-medium">Lightning Fast Search</span>
+              </li>
+              <li class="flex items-center gap-4">
+                <div
+                  class="w-6 h-6 rounded-full bg-white flex items-center justify-center"
+                >
+                  <i class="fas fa-check text-black text-xs"></i>
+                </div>
+                <span class="font-medium">Dark Mode Support</span>
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="bg-white/10 p-8 rounded-3xl border border-white/10 backdrop-blur-sm"
+          >
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-white text-black p-6 rounded-2xl">
+                <h3 class="text-4xl font-black mb-1">100%</h3>
+                <p class="text-xs font-bold text-gray-500 uppercase">Offline</p>
+              </div>
+              <div class="bg-black border border-white/20 p-6 rounded-2xl">
+                <h3 class="text-4xl font-black mb-1">0s</h3>
+                <p class="text-xs font-bold text-gray-500 uppercase">Latency</p>
+              </div>
+              <div
+                class="col-span-2 bg-gray-800 p-6 rounded-2xl flex justify-between items-center"
+              >
+                <div>
+                  <h3 class="text-xl font-bold">Backup Ready</h3>
+                  <p class="text-xs text-gray-400">Export to PDF anytime</p>
+                </div>
+                <i class="fas fa-download text-2xl text-white"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-white pt-20 pb-10 border-t border-brand-border">
+      <div class="container mx-auto px-6">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start gap-10 mb-16"
+        >
+          <div>
+            <h2 class="text-2xl font-black text-brand-black mb-2">
+              Vakeel Diary
+            </h2>
+            <p class="text-gray-500 text-sm max-w-xs">
+              Digitalizing the Indian Legal System, one case at a time.
+            </p>
+          </div>
+
+          <div class="flex gap-10 text-sm">
+            <div class="flex flex-col gap-4">
+              <h4 class="font-bold text-black">Product</h4>
+              <a href="#" class="text-gray-500 hover:text-black">Features</a>
+              <a href="#" class="text-gray-500 hover:text-black">Download</a>
+              <a href="#" class="text-gray-500 hover:text-black">Updates</a>
+            </div>
+            <div class="flex flex-col gap-4">
+              <h4 class="font-bold text-black">Legal</h4>
+              <a href="#" class="text-gray-500 hover:text-black"
+                >Privacy Policy</a
+              >
+              <a href="#" class="text-gray-500 hover:text-black"
+                >Terms of Service</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-100"
+        >
+          <p class="text-xs text-gray-400">
+            © 2026 Vakeel Diary. All rights reserved.
+          </p>
+          <div class="flex gap-4 mt-4 md:mt-0">
+            <a href="#" class="text-gray-400 hover:text-black"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-gray-400 hover:text-black"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a href="#" class="text-gray-400 hover:text-black"
+              ><i class="fab fa-github"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
