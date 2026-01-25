@@ -7,6 +7,7 @@
 **Digitalizing the Indian Legal System, one case at a time.**
 
 [![Download App](https://img.shields.io/badge/Download-Android-green?style=for-the-badge&logo=android)](https://drive.usercontent.google.com/download?id=1-79i6VvJsh_GzYD7O4ipPLRWqF0p1zgJ&export=download&authuser=0)
+[![Website](https://img.shields.io/badge/Website-Vercel-black?style=for-the-badge&logo=vercel)](https://vakeel-dairy.vercel.app/)
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge)](https://github.com/sahilmishra03/vakeel-dairy)
 [![Flutter](https://img.shields.io/badge/Flutter-3.19+-blue?style=for-the-badge&logo=flutter)](https://flutter.dev)
 
@@ -156,7 +157,7 @@ lib/
 ## 📞 Support & Contact
 
 - **Email**: support@vakeeldairy.com
-- **Website**: [vakeeldairy.com](https://vakeeldairy.com)
+- **Website**: [vakeel-dairy.vercel.app](https://vakeel-dairy.vercel.app/)
 - **Issues**: [GitHub Issues](https://github.com/sahilmishra03/vakeel-dairy/issues)
 
 ## 🤝 Contributing
@@ -173,5 +174,5 @@ We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING
 ## 📞 Support & Contact
 
 - **Email**: sahilmishra03032005@gmail.com or krishgupta0072@gmail.com
-- **Website**: vakeeldairy.com
+- **Website**: [vakeel-dairy.vercel.app](https://vakeel-dairy.vercel.app/)
 - **Issues**: [GitHub Issues](https://github.com/sahilmishra03/vakeel-dairy/issues)
