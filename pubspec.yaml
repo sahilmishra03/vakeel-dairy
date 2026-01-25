@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.10.4
+  sdk: ^3.9.2
 
 dependencies:
   flutter:
@@ -12,6 +12,7 @@ dependencies:
   provider: ^6.1.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -22,3 +23,25 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/app_icon/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app_icon/icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/app_icon/icon.png"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/app_icon/icon.png"
+    background_color: "#2563eb"
+    theme_color: "#2563eb"
+  windows:
+    generate: true
+    image_path: "assets/app_icon/icon.png"
+    icon_size: 48
+  macos:
+    generate: true
+    image_path: "assets/app_icon/icon.png"
