@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'add_case_screen.dart';
 import '../models/case_model.dart';
 import '../providers/case_provider.dart';
+import '../generated/app_localizations.dart';
 
 class ViewAllCasesScreen extends StatefulWidget {
   const ViewAllCasesScreen({super.key});
@@ -47,6 +48,8 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Consumer<CaseProvider>(
       builder: (context, caseProvider, child) {
         // --- 1. Filter Logic ---
@@ -85,9 +88,9 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
               onPressed: () => Navigator.pop(context),
             ),
             centerTitle: true,
-            title: const Text(
-              'Case Directory',
-              style: TextStyle(
+            title: Text(
+              l10n.allCases,
+              style: const TextStyle(
                 color: kPrimaryBlack,
                 fontWeight: FontWeight.w800,
                 fontSize: 18,
@@ -106,9 +109,9 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
             backgroundColor: kPrimaryBlack,
             elevation: 4,
             icon: const Icon(Icons.add, color: Colors.white),
-            label: const Text(
-              'Add Case',
-              style: TextStyle(
+            label: Text(
+              l10n.addCase,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -131,7 +134,7 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
                     cursorColor: kPrimaryBlack,
                     style: const TextStyle(fontWeight: FontWeight.w600),
                     decoration: InputDecoration(
-                      hintText: 'Search by client or case no...',
+                      hintText: l10n.searchCases,
                       hintStyle: TextStyle(
                         color: Colors.grey[500],
                         fontSize: 14,
@@ -151,7 +154,7 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
                 padding: const EdgeInsets.only(left: 20, bottom: 15),
                 child: Row(
                   children: [
-                    _buildFilterChip("All Cases"),
+                    _buildFilterChip(l10n.allCases),
                     _buildFilterChip("Civil"),
                     _buildFilterChip("Criminal"),
                     _buildFilterChip("Family"),
@@ -220,6 +223,8 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
 
   // --- Widget: List Item Card ---
   Widget _buildCaseListItem(CaseModel caseItem, CaseProvider provider) {
+    final l10n = AppLocalizations.of(context)!;
+    
     // Generate Type Avatar Code (e.g. Civil -> CI)
     String typeCode = caseItem.caseType.length > 2
         ? caseItem.caseType.substring(0, 2).toUpperCase()
@@ -353,27 +358,23 @@ class _ViewAllCasesScreenState extends State<ViewAllCasesScreen> {
                     }
                   },
                   itemBuilder: (context) => [
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: 'edit',
                       child: Row(
                         children: [
-                          Icon(Icons.edit_outlined, size: 18),
-                          SizedBox(width: 10),
-                          Text("Edit Case"),
+                          const Icon(Icons.edit_outlined, size: 18),
+                          const SizedBox(width: 10),
+                          Text(l10n.editCase),
                         ],
                       ),
                     ),
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: 'delete',
                       child: Row(
                         children: [
-                          Icon(
-                            Icons.delete_outline,
-                            size: 18,
-                            color: Colors.red,
-                          ),
-                          SizedBox(width: 10),
-                          Text("Delete", style: TextStyle(color: Colors.red)),
+                          const Icon(Icons.delete_outline, size: 18),
+                          const SizedBox(width: 10),
+                          Text(l10n.deleteCase),
                         ],
                       ),
                     ),

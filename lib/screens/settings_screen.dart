@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../utils/case_pdf_export_utils.dart';
+import '../providers/locale_provider.dart';
+import '../generated/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -10,7 +14,6 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   // State Variables
   bool _isDarkMode = false;
-  String _selectedLanguage = 'en'; // Default: English
 
   // Theme Constants
   final Color primaryBlack = const Color(0xFF111111);
@@ -18,6 +21,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final localeProvider = Provider.of<LocaleProvider>(context);
+    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Settings',
+          l10n.settings,
           style: TextStyle(
             color: primaryBlack,
             fontWeight: FontWeight.w800,
@@ -39,24 +45,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // --- SECTION 1: EXPORT DATA ---
-            _buildSectionHeader('Reports & Data'),
+            _buildSectionHeader(l10n.reportsAndData),
             const SizedBox(height: 15),
 
             // Export Today's Cases
             _buildActionTile(
               icon: Icons.today,
-              title: 'Export Today\'s Cases',
-              subtitle: 'Generate PDF of today\'s hearings',
-              onTap: () => _showComingSoon(),
+              title: l10n.exportTodayCases,
+              subtitle: l10n.exportTodayCasesSubtitle,
+              onTap: () => CasePdfExportUtils.exportTodayCases(context: context),
             ),
             const SizedBox(height: 12),
 
             // Export All Cases
             _buildActionTile(
               icon: Icons.folder_special,
-              title: 'Export All Cases',
-              subtitle: 'Generate complete case database PDF',
-              onTap: () => _showComingSoon(),
+              title: l10n.exportAllCases,
+              subtitle: l10n.exportAllCasesSubtitle,
+              onTap: () => CasePdfExportUtils.exportAllCases(context: context),
             ),
 
             const SizedBox(height: 30),
@@ -64,7 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(height: 30),
 
             // --- SECTION 2: PREFERENCES ---
-            _buildSectionHeader('App Preferences'),
+            _buildSectionHeader(l10n.appPreferences),
             const SizedBox(height: 15),
 
             // 1. Dark Mode Toggle
@@ -79,9 +85,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   horizontal: 20,
                   vertical: 5,
                 ),
-                title: const Text(
-                  'Dark Mode',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                title: Text(
+                  l10n.darkMode,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 secondary: Icon(Icons.dark_mode, color: primaryBlack),
                 value: _isDarkMode,
@@ -110,9 +116,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: [
                       Icon(Icons.language, color: primaryBlack),
                       const SizedBox(width: 15),
-                      const Text(
-                        "Language / भाषा",
-                        style: TextStyle(
+                      Text(
+                        l10n.language,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
@@ -131,8 +137,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     child: Row(
                       children: [
-                        _buildLanguageOption("English", "en"),
-                        _buildLanguageOption("हिंदी (Hindi)", "hi"),
+                        _buildLanguageOption(l10n.english, 'en', localeProvider),
+                        _buildLanguageOption(l10n.hindi, 'hi', localeProvider),
                       ],
                     ),
                   ),
@@ -168,15 +174,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   // --- Widget: Language Toggle Button ---
-  Widget _buildLanguageOption(String label, String code) {
-    bool isSelected = _selectedLanguage == code;
+  Widget _buildLanguageOption(String label, String code, LocaleProvider localeProvider) {
+    bool isSelected = localeProvider.locale.languageCode == code;
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          setState(() {
-            _selectedLanguage = code;
-          });
-          // TODO: Add actual localization logic here
+          // Change language using LocaleProvider
+          localeProvider.changeLocale(code);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -185,7 +189,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -255,25 +259,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const Icon(Icons.picture_as_pdf, color: Colors.grey, size: 20),
           ],
         ),
-      ),
-    );
-  }
-
-  // --- Show Coming Soon Dialog ---
-  void _showComingSoon() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Coming Soon'),
-        content: const Text(
-          'PDF export functionality will be available in a future update.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
       ),
     );
   }

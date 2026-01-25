@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'add_case_screen.dart';
 import 'view_all_cases_screen.dart';
 import '../providers/case_provider.dart';
+import '../generated/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Consumer<CaseProvider>(
       builder: (context, caseProvider, child) {
@@ -46,19 +48,19 @@ class _HomeScreenState extends State<HomeScreen>
             elevation: 0,
             scrolledUnderElevation: 0,
             centerTitle: false,
-            title: const Column(
+            title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Vakeel Diary',
-                  style: TextStyle(
+                  l10n.appTitle,
+                  style: const TextStyle(
                     color: kPrimaryBlack,
                     fontWeight: FontWeight.w900,
                     fontSize: 24,
                     letterSpacing: -0.5,
                   ),
                 ),
-                Text(
+                const Text(
                   'Advocate Portal',
                   style: TextStyle(
                     color: Colors.grey,
@@ -91,9 +93,9 @@ class _HomeScreenState extends State<HomeScreen>
             backgroundColor: kPrimaryBlack,
             elevation: 4,
             icon: const Icon(Icons.add, color: Colors.white),
-            label: const Text(
-              'Add Case',
-              style: TextStyle(
+            label: Text(
+              l10n.addCase,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -130,9 +132,9 @@ class _HomeScreenState extends State<HomeScreen>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Today's Hearings",
-                          style: TextStyle(
+                        Text(
+                          l10n.todaysHearings,
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w800,
                             color: kPrimaryBlack,
@@ -151,9 +153,9 @@ class _HomeScreenState extends State<HomeScreen>
                                 ),
                               );
                             },
-                            child: const Text(
-                              "See All",
-                              style: TextStyle(
+                            child: Text(
+                              l10n.viewAll,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.grey,
@@ -204,6 +206,8 @@ class _HomeScreenState extends State<HomeScreen>
     int activeCasesCount,
     int todayHearingsCount,
   ) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
@@ -212,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen>
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: primaryColor.withOpacity(0.3),
+            color: primaryColor.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -231,11 +235,11 @@ class _HomeScreenState extends State<HomeScreen>
                   vertical: 5,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  "$todayHearingsCount scheduled today",
+                  "$todayHearingsCount ${l10n.scheduledToday}",
                   style: const TextStyle(
                     color: Colors.white70,
                     fontSize: 11,
@@ -246,9 +250,9 @@ class _HomeScreenState extends State<HomeScreen>
             ],
           ),
           const SizedBox(height: 25),
-          const Text(
-            'Total Active Cases',
-            style: TextStyle(
+          Text(
+            l10n.activeCases,
+            style: const TextStyle(
               color: Colors.grey,
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -272,6 +276,8 @@ class _HomeScreenState extends State<HomeScreen>
 
   // --- Widget: BIG Empty State ---
   Widget _buildEmptyState() {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Padding(
       // Padding pushes it down to visually center it in the remaining space
       padding: const EdgeInsets.only(top: 60.0, bottom: 40.0),
@@ -290,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             const SizedBox(height: 25),
             Text(
-              "No hearings today",
+              l10n.noHearingsToday,
               style: TextStyle(
                 fontSize: 22, // Bigger Title
                 fontWeight: FontWeight.w700,
