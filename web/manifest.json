@@ -1,11 +1,11 @@
 {
-    "name": "vakeel_dairy",
-    "short_name": "vakeel_dairy",
+    "name": "Vakeel Diary",
+    "short_name": "VakeelDiary",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#2563eb",
-    "theme_color": "#2563eb",
-    "description": "A new Flutter project.",
+    "background_color": "#111111",
+    "theme_color": "#111111",
+    "description": "Digitalizing the Indian Legal System, one case at a time.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vakeel Diary</title>
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📜</text></svg>"
-    />
-    <link rel="apple-touch-icon" href="../assets/app_icon/icon.png" />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon.png" />
+    <link rel="shortcut icon" href="favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
     <meta name="theme-color" content="#111111" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -165,14 +166,21 @@
       <div
         class="container mx-auto px-6 h-20 flex justify-between items-center"
       >
-        <a href="#top" class="flex flex-col leading-tight group">
-          <span class="text-2xl font-black tracking-tight text-brand-black"
-            >Vakeel Diary</span
-          >
-          <span
-            class="text-[10px] font-semibold text-gray-500 uppercase tracking-widest"
-            >Advocate Portal</span
-          >
+        <a href="#top" class="flex items-center gap-3 group">
+          <img
+            src="assets/logo-mark.png"
+            alt="Vakeel Diary Logo"
+            class="w-10 h-10 shrink-0 object-contain transition-transform group-hover:scale-105"
+          />
+          <div class="flex flex-col leading-tight">
+            <span class="text-2xl font-black tracking-tight text-brand-black group-hover:text-gray-900 transition-colors"
+              >Vakeel Diary</span
+            >
+            <span
+              class="text-[10px] font-semibold text-gray-500 uppercase tracking-widest"
+              >Advocate Portal</span
+            >
+          </div>
         </a>
 
         <div class="hidden md:flex items-center gap-8 font-medium text-sm">
@@ -773,9 +781,16 @@
           class="flex flex-col md:flex-row justify-between items-start gap-10 mb-16"
         >
           <div>
-            <h2 class="text-2xl font-black text-brand-black mb-2">
-              Vakeel Diary
-            </h2>
+            <div class="flex items-center gap-3 mb-2">
+              <img
+                src="assets/logo-mark.png"
+                alt="Vakeel Diary Logo"
+                class="w-8 h-8 shrink-0 object-contain"
+              />
+              <h2 class="text-2xl font-black text-brand-black">
+                Vakeel Diary
+              </h2>
+            </div>
             <p class="text-gray-500 text-sm max-w-xs">
               Digitalizing the Indian Legal System, one case at a time.
             </p>
